@@ -20,6 +20,10 @@ const copyBtn = document.getElementById('copy-btn');
 let currentAnalysis = null;
 let activeTab = 0;
 
+// --- Prevent browser from opening dropped files in a new tab ---
+document.addEventListener('dragover', (e) => e.preventDefault());
+document.addEventListener('drop', (e) => e.preventDefault());
+
 // --- Drop zone events ---
 dropZone.addEventListener('click', () => fileInput.click());
 fileInput.addEventListener('change', (e) => {
@@ -28,6 +32,7 @@ fileInput.addEventListener('change', (e) => {
 
 dropZone.addEventListener('dragover', (e) => {
   e.preventDefault();
+  e.stopPropagation();
   dropZone.classList.add('drag-over');
 });
 dropZone.addEventListener('dragleave', () => {
@@ -35,6 +40,7 @@ dropZone.addEventListener('dragleave', () => {
 });
 dropZone.addEventListener('drop', (e) => {
   e.preventDefault();
+  e.stopPropagation();
   dropZone.classList.remove('drag-over');
   if (e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]);
 });
