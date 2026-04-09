@@ -14,6 +14,16 @@
   "activationEvents": ["onCommand:bin2prev.preview", "onLanguage:binary"],
   "main": "./src/extension.js",
   "contributes": {
+    "customEditors": [
+      {
+        "viewType": "bin2prev.binaryPreview",
+        "displayName": "Binary Preview",
+        "selector": [
+          { "filenamePattern": "*" }
+        ],
+        "priority": "option"
+      }
+    ],
     "commands": [
       {
         "command": "bin2prev.preview",

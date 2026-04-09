@@ -4,9 +4,46 @@ const path = require('path');
 const { analyzeBinary } = require('./analyzer');
 const { getWebviewContent } = require('./webview');
 
+class BinaryPreviewProvider {
+  constructor() {
+    this._onDidChangeCustomDocument = new vscode.EventEmitter();
+    this.onDidChangeCustomDocument = this._onDidChangeCustomDocument.event;
+  }
+
+  openCustomDocument(uri) {
+    return { uri, dispose() {} };
+  }
+
+  resolveCustomEditor(document, webviewPanel) {
+    webviewPanel.webview.options = { enableScripts: true };
+    const filePath = document.uri.fsPath;
+    const fileName = path.basename(filePath);
+
+    let bytes;
+    try {
+      bytes = fs.readFileSync(filePath);
+    } catch (err) {
+      webviewPanel.webview.html = `<p>Error reading file: ${err.message}</p>`;
+      return;
+    }
+
+    const analysis = analyzeBinary(new Uint8Array(bytes));
+    webviewPanel.webview.html = getWebviewContent(fileName, bytes.length, analysis);
+  }
+}
+
 function activate(context) {
+  // Custom editor for binary files — opens automatically
+  const provider = new BinaryPreviewProvider();
+  context.subscriptions.push(
+    vscode.window.registerCustomEditorProvider('bin2prev.binaryPreview', provider, {
+      supportsMultipleEditorsPerDocument: false,
+      webviewOptions: { retainContextWhenHidden: true }
+    })
+  );
+
+  // Command for right-click / command palette
   const cmd = vscode.commands.registerCommand('bin2prev.preview', async (uri) => {
-    // If invoked from command palette, ask for file
     if (!uri) {
       const picked = await vscode.window.showOpenDialog({
         canSelectMany: false,
@@ -33,7 +70,7 @@ function activate(context) {
     const panel = vscode.window.createWebviewPanel(
       'bin2prev',
       `bin2prev: ${fileName}`,
-      vscode.ViewColumn.Beside,
+      vscode.ViewColumn.Active,
       { enableScripts: true }
     );
 
