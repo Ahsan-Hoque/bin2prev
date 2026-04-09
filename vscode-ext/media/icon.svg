@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a2e"/>
+      <stop offset="100%" style="stop-color:#16213e"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00d2ff"/>
+      <stop offset="100%" style="stop-color:#7b68ee"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Background rounded square -->
+  <rect width="256" height="256" rx="48" fill="url(#bg)"/>
+  
+  <!-- Binary digits (left side - faded) -->
+  <text x="28" y="72" font-family="monospace" font-size="16" fill="#00d2ff" opacity="0.3">01101000</text>
+  <text x="28" y="92" font-family="monospace" font-size="16" fill="#00d2ff" opacity="0.25">01100101</text>
+  <text x="28" y="112" font-family="monospace" font-size="16" fill="#00d2ff" opacity="0.2">01101100</text>
+  <text x="28" y="132" font-family="monospace" font-size="16" fill="#00d2ff" opacity="0.15">01101100</text>
+  
+  <!-- Arrow in center -->
+  <path d="M 88 128 L 128 128" stroke="url(#accent)" stroke-width="3" stroke-linecap="round"/>
+  <path d="M 122 118 L 136 128 L 122 138" stroke="url(#accent)" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- Code brackets (right side) -->
+  <text x="148" y="100" font-family="monospace" font-size="20" font-weight="bold" fill="#7b68ee" opacity="0.8">{</text>
+  <text x="156" y="122" font-family="monospace" font-size="14" fill="#00d2ff" opacity="0.7">print</text>
+  <text x="156" y="142" font-family="monospace" font-size="14" fill="#e8a0ff" opacity="0.6">puts</text>
+  <text x="156" y="162" font-family="monospace" font-size="14" fill="#50fa7b" opacity="0.5">fmt</text>
+  <text x="148" y="182" font-family="monospace" font-size="20" font-weight="bold" fill="#7b68ee" opacity="0.8">}</text>
+  
+  <!-- Main text "bin" -->
+  <text x="46" y="210" font-family="monospace" font-size="42" font-weight="bold" fill="url(#accent)">bin</text>
+  
+  <!-- Arrow between text -->
+  <text x="128" y="210" font-family="monospace" font-size="36" fill="#ffffff" opacity="0.6">→</text>
+  
+  <!-- Main text "prev" -->
+  <text x="152" y="210" font-family="monospace" font-size="42" font-weight="bold" fill="#7b68ee">prev</text>
+</svg>
