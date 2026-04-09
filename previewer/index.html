@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>bin2prev — Binary to Source Preview</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>🔍 bin2prev</h1>
+    <p class="subtitle">Drop a native binary → see it in your favorite language</p>
+  </header>
+
+  <main>
+    <div id="drop-zone" class="drop-zone">
+      <div class="drop-zone-content">
+        <span class="drop-icon">📦</span>
+        <p>Drag &amp; drop a binary here</p>
+        <p class="drop-hint">or click to select a file</p>
+        <input type="file" id="file-input" hidden>
+      </div>
+    </div>
+
+    <div id="preview-panel" class="preview-panel hidden">
+      <div class="file-info">
+        <span id="file-name" class="file-name"></span>
+        <span id="file-size" class="file-size"></span>
+        <span id="file-format" class="file-format"></span>
+      </div>
+
+      <div class="tabs" id="tabs" role="tablist"></div>
+
+      <div class="code-container">
+        <button class="copy-btn" id="copy-btn" title="Copy to clipboard">📋 Copy</button>
+        <pre><code id="code-output"></code></pre>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>bin2prev — Binary to Preview | No data leaves your browser</p>
+  </footer>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
