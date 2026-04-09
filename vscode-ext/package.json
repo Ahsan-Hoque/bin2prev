@@ -21,7 +21,7 @@
         "selector": [
           { "filenamePattern": "*" }
         ],
-        "priority": "option"
+        "priority": "default"
       }
     ],
     "commands": [
