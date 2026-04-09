@@ -1,101 +1,59 @@
-# bin2prev — Binary to Preview
+# bin2prev — Binary to Source Preview
 
-> Turn raw native binaries into human-readable high-level language previews.
+> A VS Code extension that lets you preview native binaries as equivalent high-level source code.
 
-## 🧠 Concept
-
-This project has **two independent parts**:
-
-### Part 1: `hello` — Hand-Crafted Native Binary
-A "Hello World" executable written as **raw machine code** — no compiler, no runtime, no dependencies. Just bytes that the CPU understands directly. It produces a valid Mach-O (macOS ARM64) binary that the OS can load and execute.
-
-### Part 2: `previewer/` — Binary-to-Source Web Previewer
-A lightweight browser app (plain HTML/CSS/JS) that **reads any binary** and shows what its logic would look like in multiple high-level languages. Switch between tabs to see the same program expressed in Java, JavaScript, Ruby, Python, and more.
+Right-click any binary in VS Code → see what it does in **Java, JavaScript, Python, Ruby, Go**, or as a **raw hex dump**.
 
 ---
 
-## 📐 Architecture Diagram
+## 📐 How It Works
 
 ```
-┌─────────────────────────────────────────────────────────┐
-│                      bin2prev                           │
-├────────────────────────┬────────────────────────────────┤
-│                        │                                │
-│   Part 1: Native       │   Part 2: Web Previewer        │
-│   Binary (CLI)         │   (Browser App)                │
-│                        │                                │
-│  ┌──────────────────┐  │  ┌──────────────────────────┐  │
-│  │  Raw machine code│  │  │  index.html              │  │
-│  │  (ARM64 / x86)   │  │  │  ├── style.css           │  │
-│  │                   │  │  │  ├── app.js              │  │
-│  │  Mach-O / ELF    │  │  │  └── languages/          │  │
-│  │  executable       │  │  │      ├── java.js         │  │
-│  │                   │  │  │      ├── javascript.js   │  │
-│  │  $ ./hello        │  │  │      ├── ruby.js         │  │
-│  │  > Hello, World!  │  │  │      ├── python.js       │  │
-│  └──────────────────┘  │  │      └── go.js            │  │
-│                        │  └──────────────────────────┘  │
-│                        │                                │
-│  No compiler needed.   │  No build step. Just open      │
-│  Already native.       │  index.html in a browser.      │
-│                        │                                │
-├────────────────────────┴────────────────────────────────┤
-│                                                         │
-│                    Data Flow                            │
-│                                                         │
-│   ┌──────────┐    drag & drop    ┌────────────────┐     │
-│   │  Binary   │ ───────────────▶ │  Web Previewer │     │
-│   │  (hello)  │    or file pick  │                │     │
-│   └──────────┘                   │  ┌──────────┐  │     │
-│                                  │  │ Analyze   │  │     │
-│                                  │  │ bytes &   │  │     │
-│                                  │  │ detect    │  │     │
-│                                  │  │ syscalls  │  │     │
-│                                  │  └─────┬────┘  │     │
-│                                  │        │       │     │
-│                                  │        ▼       │     │
-│                                  │  ┌──────────┐  │     │
-│                                  │  │ Generate  │  │     │
-│                                  │  │ previews  │  │     │
-│                                  │  │ per lang  │  │     │
-│                                  │  └─────┬────┘  │     │
-│                                  │        │       │     │
-│                                  │        ▼       │     │
-│                                  │  ┏━━━━━━━━━━━━━━━┓  │
-│                                  │  ┃ Java | JS | Ruby ┃│
-│                                  │  ┃───────────────────┃│
-│                                  │  ┃ public class Hello┃│
-│                                  │  ┃ {                 ┃│
-│                                  │  ┃   public static   ┃│
-│                                  │  ┃   void main(..){  ┃│
-│                                  │  ┃     System.out.   ┃│
-│                                  │  ┃     println(      ┃│
-│                                  │  ┃     "Hello World")┃│
-│                                  │  ┃   }               ┃│
-│                                  │  ┃ }                 ┃│
-│                                  │  ┗━━━━━━━━━━━━━━━┛  │
-│                                  └────────────────┘     │
-└─────────────────────────────────────────────────────────┘
+┌──────────────────────────────────────────────────────────┐
+│                        VS Code                           │
+│                                                          │
+│  Explorer                    Preview Panel               │
+│  ┌──────────┐               ┌──────────────────────────┐ │
+│  │ 📁 bin2prev              │ Java | JS | Python | Ruby│ │
+│  │  ├── hello│  ──right──▶  │─────────────────────────-│ │
+│  │  └── greet│    click     │ public class Hello {     │ │
+│  └──────────┘               │   public static void     │ │
+│                             │   main(String[] args) {  │ │
+│                             │     System.out.print(    │ │
+│                             │       "Hello, World!\n");│ │
+│                             │     System.exit(0);      │ │
+│                             │   }                      │ │
+│                             │ }                        │ │
+│                             └──────────────────────────┘ │
+└──────────────────────────────────────────────────────────┘
 ```
+
+1. **Load** — Right-click a binary → "bin2prev: Preview Binary as Source Code"
+2. **Analyze** — Parses Mach-O/ELF headers, decodes ARM64 instructions, detects syscalls
+3. **Preview** — Shows equivalent code in 6 tabs: Java, JavaScript, Python, Ruby, Go, Raw hex
 
 ---
 
 ## 🚀 Quick Start
 
-### Run the native binary
+### Install the extension
 ```bash
-# No compilation — it's already machine code
-chmod +x hello
-./hello
-# Output: Hello, World!
+cd vscode-ext
+npm install
+npx @vscode/vsce package --allow-missing-repository
+code --install-extension bin2prev-0.0.1.vsix
 ```
 
-### Launch the previewer
+### Try with example binaries
 ```bash
-# No build step — just open in browser
-open previewer/index.html
-# Then drag & drop the "hello" binary (or any binary) into the page
+# "Hello, World!" — prints and exits
+./examples/hello
+
+# Interactive greeter — asks your name in a loop, Ctrl+C to exit
+./examples/greet
 ```
+
+Then right-click either binary in VS Code's explorer → **"bin2prev: Preview Binary as Source Code"**
 
 ---
 
@@ -104,41 +62,41 @@ open previewer/index.html
 ```
 bin2prev/
 ├── README.md
-├── hello                  # Part 1: raw native binary (Mach-O ARM64)
-└── previewer/             # Part 2: web-based binary previewer
-    ├── index.html         #   main page with tabbed UI
-    ├── style.css          #   styling
-    ├── app.js             #   core logic: binary parser + tab controller
-    └── languages/         #   language-specific code generators
-        ├── java.js
-        ├── javascript.js
-        ├── ruby.js
-        ├── python.js
-        └── go.js
+├── examples/                # Example native ARM64 binaries
+│   ├── hello                #   prints "Hello, World!" and exits
+│   └── greet                #   interactive name prompt loop
+└── vscode-ext/              # VS Code extension
+    ├── package.json         #   extension manifest
+    └── src/
+        ├── extension.js     #   command registration + webview panel
+        ├── analyzer.js      #   binary parser (Mach-O, ELF, ARM64 decoder)
+        └── webview.js       #   HTML/CSS/JS for the preview panel
 ```
 
 ---
 
-## 🎯 How the Previewer Works
+## 🔍 What It Detects
 
-1. **Load** — Drag & drop a binary file or use the file picker
-2. **Analyze** — The app reads the binary bytes, detects the format (Mach-O/ELF), and identifies syscalls (write, exit, etc.)
-3. **Map** — Syscalls and data are mapped to language-specific equivalents
-4. **Preview** — Switch between tabs to see the same logic in Java, JavaScript, Ruby, Python, or Go
+| Binary Format | Instruction Set | Syscalls |
+|---------------|----------------|----------|
+| Mach-O 64-bit | ARM64 (MOVZ, ADR, SVC) | write, read, exit |
+| Mach-O 32-bit | — (string fallback) | — |
+| ELF 32/64-bit | — (string fallback) | — |
+| PE (Windows) | — (string fallback) | — |
 
 ---
 
-## 🛠 Tech Stack
+## 🛠 Example Binaries
 
-| Component | Technology |
-|-----------|-----------|
-| Native binary | Raw ARM64 machine code, Mach-O format |
-| Web UI | Plain HTML + CSS + vanilla JS |
-| Code highlighting | Built-in (no external deps) |
-| Binary parsing | Custom JS parser (no libraries) |
+### `hello`
+Native ARM64 Mach-O binary — prints "Hello, World!" using raw kernel syscalls (`write` + `exit`). No compiler, no runtime.
+
+### `greet`
+Interactive ARM64 binary — prompts "Enter your name (^C):", reads input, prints "Hello, \<name\>", loops until Ctrl+C. Uses `write` + `read` syscalls.
 
 ---
 
 ## 📜 License
 
 MIT
+
