@@ -1,8 +1,14 @@
-# bin2prev — Binary to Source Preview
+# bin2prev — Preview Native Code in Your Beloved Language
 
-> A VS Code extension that lets you preview native binaries as equivalent high-level source code.
+> Machines don't speak Java, Python, or JavaScript — they speak **native binary**.
 
-Right-click any binary in VS Code → see what it does in **Java, JavaScript, Python, Ruby, Go**, or as a **raw hex dump**.
+High-level languages were invented for humans, not machines. Every line of Python or Java you write gets compiled down to the binary that the CPU actually executes. **The native code is the real code.** Everything else is a translation.
+
+With AI agents, you can now **write native binary directly** — the way machines actually think. No compiler, no runtime, no abstraction layers. Just raw instructions the CPU understands.
+
+**bin2prev** bridges the gap: write native with your agent, then preview it in your preferred language — **Java, JavaScript, Python, Ruby, Go** — so you can read what the machine already understands.
+
+**Write native. Preview human.**
 
 ---
 
