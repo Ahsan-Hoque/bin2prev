@@ -3,9 +3,9 @@
   "displayName": "bin2prev — Preview Native Code in Your Beloved Language",
   "description": "Machines don't speak Java, Python, or JavaScript — they speak native binary. High-level languages exist for developers, not for machines. With AI agents, you can now write native binary directly — the way machines actually think. bin2prev lets you preview that native code in your preferred language (Java, JavaScript, Python, Ruby, Go) so you can read what the machine already understands. Write native. Preview human.",
   "version": "0.0.1",
-  "publisher": "Ahsan-Hoque",
+  "publisher": "AhsanulHoque",
   "engines": {
-    "vscode": "^1.115.0"
+    "vscode": "^1.80.0"
   },
   "categories": [
     "Other",
@@ -57,6 +57,6 @@
     }
   },
   "devDependencies": {
-    "@types/vscode": "^1.115.0"
+    "@types/vscode": "^1.80.0"
   }
 }
