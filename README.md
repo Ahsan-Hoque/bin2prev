@@ -20,9 +20,9 @@ With AI agents, you can now **write native binary directly** — the way machine
 │                                                          │
 │  Explorer                    Preview Panel               │
 │  ┌──────────┐               ┌──────────────────────────┐ │
-│  │ 📁 bin2prev              │ Java | JS | Python | Ruby│ │
-│  │  ├── hello│  ──right──▶  │─────────────────────────-│ │
-│  │  └── greet│    click     │ public class Hello {     │ │
+│  │ 📁 bin2prev              │ Raw | Java | JS | Python │ │
+│  │  ├── hello│ ──dbl-click─▶│─────────────────────────-│ │
+│  │  └── greet│              │ public class Hello {     │ │
 │  └──────────┘               │   public static void     │ │
 │                             │   main(String[] args) {  │ │
 │                             │     System.out.print(    │ │
@@ -34,9 +34,9 @@ With AI agents, you can now **write native binary directly** — the way machine
 └──────────────────────────────────────────────────────────┘
 ```
 
-1. **Load** — Right-click a binary → "bin2prev: Preview Binary as Source Code"
+1. **Open** — Double-click any binary file — bin2prev opens it automatically
 2. **Analyze** — Parses Mach-O/ELF headers, decodes ARM64 instructions, detects syscalls
-3. **Preview** — Shows equivalent code in 6 tabs: Java, JavaScript, Python, Ruby, Go, Raw hex
+3. **Preview** — Shows equivalent code in 6 tabs: Raw Binary, Java, JavaScript, Python, Ruby, Go
 
 ---
 
@@ -57,7 +57,7 @@ git clone https://github.com/Ahsan-Hoque/bin2prev.git
 cd bin2prev/vscode-ext
 npm install
 npx @vscode/vsce package --allow-missing-repository
-code --install-extension bin2prev-0.0.1.vsix
+code --install-extension bin2prev-0.0.4.vsix
 ```
 
 ---
