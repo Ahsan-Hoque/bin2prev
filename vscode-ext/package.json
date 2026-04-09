@@ -1,0 +1,40 @@
+{
+  "name": "bin2prev",
+  "displayName": "bin2prev — Binary to Source Preview",
+  "description": "Preview binary executables as equivalent source code in Java, JavaScript, Python, Ruby, Go, and raw hex",
+  "version": "0.0.1",
+  "publisher": "ahsan-hoque",
+  "engines": {
+    "vscode": "^1.115.0"
+  },
+  "categories": [
+    "Other",
+    "Visualization"
+  ],
+  "activationEvents": [],
+  "main": "./src/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "bin2prev.preview",
+        "title": "bin2prev: Preview Binary as Source Code"
+      }
+    ],
+    "menus": {
+      "explorer/context": [
+        {
+          "command": "bin2prev.preview",
+          "when": "resourceScheme == file"
+        }
+      ],
+      "editor/title/context": [
+        {
+          "command": "bin2prev.preview"
+        }
+      ]
+    }
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.115.0"
+  }
+}
