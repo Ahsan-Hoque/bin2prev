@@ -40,15 +40,38 @@ With AI agents, you can now **write native binary directly** — the way machine
 
 ---
 
-## 🚀 Quick Start
+## 🚀 Install
 
-### Install the extension
+### From VS Code Marketplace (Recommended)
+
+1. Open **VS Code**
+2. Go to **Extensions** (`Cmd+Shift+X` on Mac / `Ctrl+Shift+X` on Windows/Linux)
+3. Search for **`bin2prev`**
+4. Click **Install**
+
+That's it — you're ready to preview binaries.
+
+### From Source (Development)
 ```bash
-cd vscode-ext
+git clone https://github.com/Ahsan-Hoque/bin2prev.git
+cd bin2prev/vscode-ext
 npm install
 npx @vscode/vsce package --allow-missing-repository
 code --install-extension bin2prev-0.0.1.vsix
 ```
+
+---
+
+## 🎯 Usage
+
+### Open a binary
+Just **double-click** any binary file in VS Code's explorer — bin2prev opens it automatically with a raw hex view and language preview tabs.
+
+### Right-click menu
+Right-click any file → **"bin2prev: Preview Binary as Source Code"**
+
+### Command palette
+`Cmd+Shift+P` → type **"bin2prev"** → select **"Preview Binary as Source Code"**
 
 ### Try with example binaries
 ```bash
@@ -59,7 +82,7 @@ code --install-extension bin2prev-0.0.1.vsix
 ./examples/greet
 ```
 
-Then right-click either binary in VS Code's explorer → **"bin2prev: Preview Binary as Source Code"**
+Open either binary in VS Code to see it previewed as Java, JavaScript, Python, Ruby, or Go.
 
 ---
 
