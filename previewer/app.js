@@ -3,8 +3,9 @@ import * as javascript from './languages/javascript.js';
 import * as python from './languages/python.js';
 import * as ruby from './languages/ruby.js';
 import * as go from './languages/go.js';
+import * as raw from './languages/raw.js';
 
-const languages = [java, javascript, python, ruby, go];
+const languages = [java, javascript, python, ruby, go, raw];
 
 // --- DOM refs ---
 const dropZone = document.getElementById('drop-zone');
@@ -123,7 +124,7 @@ function analyzeBinary(bytes, format) {
     syscalls.push({ name: 'exit', code: 0 });
   }
 
-  return { format, syscalls, strings };
+  return { format, syscalls, strings, _bytes: bytes };
 }
 
 function analyzeMachO64(bytes, syscalls, strings) {
