@@ -8,12 +8,12 @@ function getWebviewContent(fileName, fileSize, analysis) {
 
   // Pre-generate all language previews
   const langs = {
+    'Raw Binary': generateRaw(analysis),
     Java: generateJava(analysis),
     JavaScript: generateJS(analysis),
     Python: generatePython(analysis),
     Ruby: generateRuby(analysis),
-    Go: generateGo(analysis),
-    'Raw Binary': generateRaw(analysis)
+    Go: generateGo(analysis)
   };
 
   const langsJSON = JSON.stringify(langs);
